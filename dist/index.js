@@ -73,6 +73,7 @@ async function run() {
     https.get(url, (response) => response.pipe(file)).on('error', core.setFailed).end();
     file.close()
     code = await exec.exec('python3', [file_name])
+    console.log(`install: ${code}`)
     if (code) {
         core.setFailed("cannot execute installation script")
     }
@@ -80,6 +81,7 @@ async function run() {
 
     // show dephell info
     code = await exec.exec('python3', ['-m', 'dephell', 'inspect', 'self'])
+    console.log(`install: ${inspect}`)
     if (code) {
         core.setFailed("cannot run dephell")
     }
