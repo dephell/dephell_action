@@ -8,7 +8,6 @@ inputs:
   dephell-env:
     description: 'DepHell env to install dependencies and run'
     required: false
-    default: 'main'
   python-version:
     description: 'Python version to use'
     required: false
