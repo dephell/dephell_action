@@ -1,0 +1,3 @@
+[tool.dephell.main]
+from = 'requirements.txt'
+command = 'python -v'

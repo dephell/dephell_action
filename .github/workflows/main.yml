@@ -1,10 +1,11 @@
-# DepHell GitHub Action
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
-An official [GitHub Action](https://help.github.com/en/actions) to run [DepHell](https://github.com/dephell/dephell) commands.
-
-```yaml
 jobs:
-  pytest:
+  smoke:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -17,5 +18,4 @@ jobs:
       - name: Run DepHell
         uses: actions/dephell
         with:
-          dephell-env: pytest
-```
+          dephell-env: main

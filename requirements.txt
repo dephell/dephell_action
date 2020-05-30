@@ -1,0 +1,2 @@
+# not actual requirements, used only for smoke tests on CI
+cowsay
