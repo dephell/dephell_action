@@ -227,11 +227,6 @@ async function run() {
         console.log(`dephell-version: ${version}`);
     }
 
-    console.log(process.cwd())
-    fs.readdir(process.cwd(), function (err, items) {
-        console.log(items);
-    })
-
     // download installation script
     const file = fs.createWriteStream(file_name)
     const response = await got(url);
