@@ -264,10 +264,7 @@ async function run() {
     }
     console.log(`dephell-env: ${env}`);
 
-    const python = core.getInput('python-version');
-    if (!env) {
-        core.setFailed("`python-version` is required")
-    }
+    const python = core.getInput('python-version') || "python3";
     console.log(`python-version: ${python}`);
 
     const version = core.getInput('dephell-version');
