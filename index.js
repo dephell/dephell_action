@@ -16,22 +16,37 @@ async function run() {
 
     // install dephell
     const file = fs.createWriteStream(file_name)
-    https.get(url, (response) => response.pipe(file)).on('error', core.setFailed);
+    https.get(url, (response) => response.pipe(file)).on('error', core.setFailed).end();
     file.close()
-    await exec.exec('python', [file_name])
-    fs.unlink(file_name)
+    code = await exec.exec('python', [file_name])
+    if (code) {
+        core.setFailed("cannot execute installation script")
+    }
+    fs.unlinkSync(file_name)
 
     // show dephell info
-    await exec.exec('dephell inspect self')
+    code = await exec.exec('dephell inspect self')
+    if (code) {
+        core.setFailed("cannot run dephell")
+    }
 
     // create venv, install dependencies, run the command
-    await exec.exec('dephell', ['venv', 'create', '--env', env, '--python', python])
-    await exec.exec('dephell', ['deps', 'install', '--env', env])
-    await exec.exec('dephell', ['venv', 'run', '--env', env])
+    code = await exec.exec('dephell', ['venv', 'create', '--env', env, '--python', python])
+    if (code) {
+        core.setFailed("cannot create venv")
+    }
+    code = await exec.exec('dephell', ['deps', 'install', '--env', env])
+    if (code) {
+        core.setFailed("cannot install deps")
+    }
+    code = await exec.exec('dephell', ['venv', 'run', '--env', env])
+    if (code) {
+        core.setFailed("non-zero status code returned by the command")
+    }
 }
 
 try {
-    run()
+    run();
 } catch (error) {
     core.setFailed(error);
 }
