@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run DepHell
-        uses: dephell/dephell_action@v0.0.7
+        uses: dephell/dephell_action@smoke
         with:
           dephell-env: main
           python-version: ${{ matrix.python-version }}
