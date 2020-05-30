@@ -18,7 +18,7 @@ async function run() {
     const file = fs.createWriteStream(file_name)
     https.get(url, (response) => response.pipe(file)).on('error', core.setFailed).end();
     file.close()
-    code = await exec.exec('python', [file_name])
+    code = await exec.exec('python3', [file_name])
     if (code) {
         core.setFailed("cannot execute installation script")
     }
