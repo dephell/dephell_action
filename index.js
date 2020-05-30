@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const request = require('request');
+const https = require('https');
 const fs = require('fs');
 
 async function run() {
@@ -16,7 +16,7 @@ async function run() {
 
     // install dephell
     const file = fs.createWriteStream(file_name)
-    request.get(url).on('error', core.setFailed).pipe(file)
+    https.get(url, (response) => response.pipe(file)).on('error', core.setFailed);
     file.close()
     await exec.exec('python', [file_name])
     fs.unlink(file_name)
