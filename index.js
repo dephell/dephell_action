@@ -8,23 +8,27 @@ async function run() {
     const url = 'https://raw.githubusercontent.com/dephell/dephell/master/install.py'
     const file_name = '.dephell_install.py'
 
-    console.log(process.env)
-
     // get variables
+
     const env = core.getInput('dephell-env');
     if (!env) {
         core.setFailed("`dephell-env` is required")
     }
     console.log(`dephell-env: ${env}`);
+
     const python = core.getInput('python-version');
     if (!env) {
         core.setFailed("`python-version` is required")
     }
     console.log(`python-version: ${python}`);
+
     const version = core.getInput('dephell-version');
     if (version) {
         console.log(`dephell-version: ${version}`);
     }
+
+    const executable = process.env.pythonLocation || 'python3'
+    console.log(`python executable for dephell: ${executable}`);
 
     // download installation script
     const file = fs.createWriteStream(file_name)
@@ -41,7 +45,7 @@ async function run() {
     if (version) {
         args.push('--version', version)
     }
-    code = await exec.exec('python3', args, options)
+    code = await exec.exec(executable, args, options)
     if (code) {
         core.setFailed("cannot execute installation script")
     }
