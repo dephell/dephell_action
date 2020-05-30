@@ -276,7 +276,7 @@ async function run() {
     if (code) {
         core.setFailed("cannot install deps")
     }
-    code = await exec.exec('dephell', ['venv', 'run', '--env', env], options)
+    code = await exec.exec('dephell', ['venv', 'run', '--env', env, '--silent'], options)
     if (code) {
         core.setFailed("non-zero status code returned by the command")
     }
