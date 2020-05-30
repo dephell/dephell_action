@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const github = require('@actions/github');
 const got = require('got');
 const fs = require('fs');
 
@@ -11,6 +12,7 @@ async function run() {
     // get variables
 
     const env = core.getInput('dephell-env');
+    console.log(github.context)
     if (!env) {
         core.setFailed("`dephell-env` is required")
     }
