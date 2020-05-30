@@ -249,6 +249,7 @@ const exec = __webpack_require__(230);
 const github = __webpack_require__(462);
 const got = __webpack_require__(188);
 const fs = __webpack_require__(747);
+const io = __webpack_require__(954)
 
 async function run() {
     // set constants
@@ -258,13 +259,16 @@ async function run() {
     // get variables
 
     const env = core.getInput('dephell-env');
-    console.log(github.context)
+    console.log(github.context.payload)
     if (!env) {
         core.setFailed("`dephell-env` is required")
     }
     console.log(`dephell-env: ${env}`);
 
-    const python = core.getInput('python-version') || "python3";
+    let python = core.getInput('python-version');
+    if (!python) {
+        python = io.which("python3", true)
+    }
     console.log(`python-version: ${python}`);
 
     const version = core.getInput('dephell-version');

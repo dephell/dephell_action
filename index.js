@@ -3,6 +3,7 @@ const exec = require('@actions/exec');
 const github = require('@actions/github');
 const got = require('got');
 const fs = require('fs');
+const io = require('@actions/io')
 
 async function run() {
     // set constants
@@ -12,13 +13,16 @@ async function run() {
     // get variables
 
     const env = core.getInput('dephell-env');
-    console.log(github.context)
+    console.log(github.context.payload)
     if (!env) {
         core.setFailed("`dephell-env` is required")
     }
     console.log(`dephell-env: ${env}`);
 
-    const python = core.getInput('python-version') || "python3";
+    let python = core.getInput('python-version');
+    if (!python) {
+        python = io.which("python3", true)
+    }
     console.log(`python-version: ${python}`);
 
     const version = core.getInput('dephell-version');
