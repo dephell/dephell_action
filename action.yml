@@ -1,5 +1,8 @@
 name: 'DepHell'
 description: 'Run DepHell envs'
+branding:
+  color: red
+  icon: package
 inputs:
   dephell-env:
     description: 'DepHell env to install dependencies and run'
