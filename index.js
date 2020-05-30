@@ -8,6 +8,8 @@ async function run() {
     const url = 'https://raw.githubusercontent.com/dephell/dephell/master/install.py'
     const file_name = '.dephell_install.py'
 
+    console.log(process.env)
+
     // get variables
     const env = core.getInput('dephell-env');
     if (!env) {
