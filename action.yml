@@ -1,7 +1,7 @@
 name: 'DepHell'
 description: 'Run DepHell envs'
 inputs:
-  env:
+  dephell-env:
     description: 'DepHell env to install dependencies and run'
     required: true
     default: 'main'
