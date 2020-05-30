@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const exec = require('@actions/exec');
 const got = require('got');
 const fs = require('fs');
+const io = require('@actions/io')
 
 async function run() {
     // set constants
@@ -10,15 +11,15 @@ async function run() {
 
     // get variables
 
-    const env = core.getInput('dephell-env');
+    const env = core.getInput('dephell-env') || process.env.GITHUB_JOB;
     if (!env) {
         core.setFailed("`dephell-env` is required")
     }
     console.log(`dephell-env: ${env}`);
 
-    const python = core.getInput('python-version');
-    if (!env) {
-        core.setFailed("`python-version` is required")
+    let python = core.getInput('python-version');
+    if (!python) {
+        python = await io.which("python3", true)
     }
     console.log(`python-version: ${python}`);
 
@@ -27,7 +28,7 @@ async function run() {
         console.log(`dephell-version: ${version}`);
     }
 
-    const executable = process.env.pythonLocation || 'python3'
+    const executable = 'python3'
     console.log(`python executable for dephell: ${executable}`);
 
     // download installation script

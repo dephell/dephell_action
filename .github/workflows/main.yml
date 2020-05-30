@@ -8,11 +8,15 @@ on:
       - master
 
 jobs:
-  smoke:
+  main:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version:
+          - "3.6"
+          - "3.7"
+          - "3.8"
+          - pypy3
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -21,10 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run DepHell
-        uses: dephell/dephell_action@master
-        with:
-          dephell-env: main
-          python-version: ${{ matrix.python-version }}
+        uses: dephell/dephell_action@pypy
 
   yaml_lint:
     runs-on: ubuntu-latest

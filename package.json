@@ -1,6 +1,6 @@
 {
   "name": "dephell_action",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "dependencies": {
     "@actions/core": "^1.2.4",
     "@actions/exec": "^1.0.4",
-    "@actions/github": "^2.2.0",
+    "@actions/io": "^1.0.2",
     "got": "^11.1.4"
   }
 }
