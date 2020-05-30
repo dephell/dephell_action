@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
-const https = require('https');
+const got = require('got');
 const fs = require('fs');
 
 async function run() {
@@ -10,13 +10,20 @@ async function run() {
 
     // get variables
     const env = core.getInput('dephell-env');
-    const python = core.getInput('python-version');
+    if (!env) {
+        core.setFailed("`dephell-env` is required")
+    }
     console.log(`dephell-env: ${env}`);
+    const python = core.getInput('python-version');
+    if (!env) {
+        core.setFailed("`python-version` is required")
+    }
     console.log(`python-version: ${python}`);
 
     // install dephell
     const file = fs.createWriteStream(file_name)
-    https.get(url, (response) => response.pipe(file)).on('error', core.setFailed).end();
+    const response = await got(url);
+    file.write(response.body)
     file.close()
     code = await exec.exec('python3', [file_name])
     console.log(`install: ${code}`)
@@ -27,7 +34,7 @@ async function run() {
 
     // show dephell info
     code = await exec.exec('python3', ['-m', 'dephell', 'inspect', 'self'])
-    console.log(`install: ${inspect}`)
+    console.log(`install: ${code}`)
     if (code) {
         core.setFailed("cannot run dephell")
     }
