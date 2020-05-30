@@ -3,7 +3,7 @@ const exec = require('@actions/exec');
 const request = require('request');
 const fs = require('fs');
 
-try {
+async function run() {
     // set constants
     const url = 'https://raw.githubusercontent.com/dephell/dephell/master/install.py'
     const file_name = '.dephell_install.py'
@@ -28,6 +28,10 @@ try {
     await exec.exec('dephell', ['venv', 'create', '--env', env, '--python', python])
     await exec.exec('dephell', ['deps', 'install', '--env', env])
     await exec.exec('dephell', ['venv', 'run', '--env', env])
+}
+
+try {
+    run()
 } catch (error) {
-    core.setFailed(error.message);
+    core.setFailed(error);
 }
