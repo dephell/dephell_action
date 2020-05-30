@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run DepHell
-        uses: dephell/dephell_action@smoke
+        uses: dephell/dephell_action@master
         with:
           dephell-env: main
           python-version: ${{ matrix.python-version }}
