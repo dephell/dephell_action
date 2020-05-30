@@ -223,6 +223,14 @@ async function run() {
     }
     console.log(`python-version: ${python}`);
     const version = core.getInput('dephell-version');
+    if (version) {
+        console.log(`dephell-version: ${version}`);
+    }
+
+    console.log(process.cwd())
+    fs.readdir(process.cwd(), function (err, items) {
+        console.log(items);
+    })
 
     // download installation script
     const file = fs.createWriteStream(file_name)
