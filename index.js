@@ -19,6 +19,7 @@ async function run() {
         core.setFailed("`python-version` is required")
     }
     console.log(`python-version: ${python}`);
+    const version = core.getInput('dephell-version');
 
     // download installation script
     const file = fs.createWriteStream(file_name)
@@ -30,7 +31,11 @@ async function run() {
     const options = {
         silent: true,
     };
-    code = await exec.exec('python3', [file_name], options)
+    let args = [file_name]
+    if (version) {
+        args.push('--version', version)
+    }
+    code = await exec.exec('python3', args, options)
     if (code) {
         core.setFailed("cannot execute installation script")
     }
@@ -47,7 +52,7 @@ async function run() {
     if (code) {
         core.setFailed("cannot create venv")
     }
-    code = await exec.exec('dephell', ['deps', 'install', '--env', env])
+    code = await exec.exec('dephell', ['deps', 'install', '--env', env, '--silent'])
     if (code) {
         core.setFailed("cannot install deps")
     }
@@ -57,8 +62,12 @@ async function run() {
     }
 }
 
-try {
-    run();
-} catch (error) {
-    core.setFailed(error);
+async function main() {
+    try {
+        run();
+    } catch (error) {
+        core.setFailed(error);
+    }
 }
+
+main()

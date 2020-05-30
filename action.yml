@@ -11,6 +11,9 @@ inputs:
   python-version:
     description: 'Python version to use'
     required: true
+  dephell-version:
+    description: 'DepHell version to install'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
