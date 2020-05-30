@@ -4,9 +4,9 @@ An official [GitHub Action](https://help.github.com/en/actions) to run [DepHell]
 
 Input variables:
 
-- `dephell-env` -- DepHell environment to run.
-- `python-version` -- Python version to use when creating venv.
-- `dephell-version` -- DepHell version to install. The latest version is installed by default.
+- `dephell-env` -- DepHell environment to run. Default: job name
+- `python-version` -- Python version to use when creating venv. Default: `python3`
+- `dephell-version` -- DepHell version to install. Default: the latest release.
 
 ## Example
 
@@ -30,11 +30,16 @@ on:
       - master
 
 jobs:
+  # env name detected from the job name, python version explicitly enumerated
   pytest:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version:
+          - "3.6"
+          - "3.7"
+          - "3.8"
+          - pypy3
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -44,9 +49,26 @@ jobs:
         uses: actions/checkout@v2
       - name: Run DepHell
         uses: dephell/dephell_action@master
+
+  # env name enumerated, python version is 3.7
+  linters:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dephell-env:
+          - flake8
+          - typing
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          dephell-env: pytest
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.7"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Run DepHell
+        uses: dephell/dephell_action@master
+        with:
+          dephell-env: ${{ matrix.dephell-env }}
 ```
 
 See [DepHell documentation](https://dephell.readthedocs.io/config.html) for details on configuring DepHell.
