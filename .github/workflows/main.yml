@@ -1,8 +1,11 @@
+---
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   smoke:
@@ -15,7 +18,18 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Run DepHell
-        uses: actions/dephell
+        uses: dephell/dephell_action@smoke
         with:
           dephell-env: main
+          python-version: ${{ matrix.python-version }}
+
+  yaml_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Lint
+        uses: ibiqlik/action-yamllint@v1
