@@ -27,7 +27,7 @@ async function run() {
         console.log(`dephell-version: ${version}`);
     }
 
-    const executable = process.env.pythonLocation || 'python3'
+    const executable = 'python3'
     console.log(`python executable for dephell: ${executable}`);
 
     // download installation script

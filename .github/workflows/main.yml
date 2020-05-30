@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version:
+          - "3.6"
+          - "3.7"
+          - "3.8"
+          - pypy3
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
