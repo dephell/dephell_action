@@ -25,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run DepHell
-        uses: dephell/dephell_action@pypy
+        uses: dephell/dephell_action@master
 
   yaml_lint:
     runs-on: ubuntu-latest
