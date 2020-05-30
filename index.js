@@ -21,7 +21,7 @@ async function run() {
 
     let python = core.getInput('python-version');
     if (!python) {
-        python = io.which("python3", true)
+        python = await io.which("python3", true)
     }
     console.log(`python-version: ${python}`);
 
