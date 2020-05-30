@@ -13,9 +13,18 @@ Input variables:
 DepHell config (`pyproject.toml`):
 
 ```toml
-[tool.dephell.main]
+[tool.dephell.pytest]
 from = {format = "pip", path = "requirements.txt"}
 command = "pytest"
+
+[tool.dephell.flake8]
+from = {format = "pip", path = "requirements-flake.txt"}
+python = ">=3.6"
+command = "flake8"
+
+[tool.dephell.typing]
+from = {format = "poetry", path = "pyproject.toml"}
+command = "mypy project_name"
 ```
 
 GitHub Actions workflow (`.github/workflows/main.yml`):
